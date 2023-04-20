@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ScoreRepositoryImplTest {
 
     ScoreRepository repository = new ScoreRepositoryImpl();
-
+    String sortedNum = "1";
     // 단위 테스트 (Unit Test)
     // 테스트 시나리오
     // - 단언(Assertion) 기법
