@@ -24,7 +24,7 @@ public class BoardListResponseDTO {
         this.viewCount = board.getViewCount();
     }
 
-    public String makePrettierDateString(LocalDateTime regDateTime) {
+    static String makePrettierDateString(LocalDateTime regDateTime) {
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return pattern.format(regDateTime);
     }

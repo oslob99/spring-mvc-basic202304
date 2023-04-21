@@ -37,8 +37,8 @@
 
             <c:forEach var="b" items="${boardList}">
             <div class="card-wrapper">
-                <section class="card" onclick="window.location.href='/board/detail?boardNo=${b.boardNo}'">
-                    <div class="card-title-wrapper">
+                <section class="card">
+                    <div class="card-title-wrapper" onclick="window.location.href='/board/detail?boardNo=${b.boardNo}'">
                         <h2 class="card-title">${b.shortTitle}</h2>
                         <input type="hidden" id="boardNo" value="${b.boardNo}">
                         <div class="time-view-wrapper">

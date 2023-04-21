@@ -53,7 +53,7 @@
 	<div class="container">
 		<div class="post-info">
 			<span>${b.title}</span>
-			<span>작성일: {b.regDateTime}</span>
+			<span>작성일: ${b.regDateTime}</span>
 		</div>
         <div class="view">
             <i class="fas fa-eye"></i>
