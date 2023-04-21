@@ -6,6 +6,7 @@ import com.spring.mvc.chap04.dto.ScoreUpdateDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepository;
 import com.spring.mvc.chap04.repository.ScoreRepositoryImpl;
+import com.spring.mvc.chap04.service.ScoreService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,7 @@ public class ScoreController {
 
     // 저장소에 의존해야 데이터를 받아서 클라이언트에게 응답할 수 있음
     private final ScoreRepository repository;
+    private final ScoreService scoreService;
 
     // 만약에 클랫의 생성자가 단 1개라면
     // 자동으로 @AutoWired를 써줌
@@ -58,16 +60,9 @@ public class ScoreController {
     // 1. 성적등록 화면 띄우기 + 정보목록조회
     @GetMapping("/list")
     public String list(@RequestParam (defaultValue = "num") String sorted,Model model){
-        List<Score> scoreList = repository.findAll(sorted);
+        List<ScoreListResponseDTO> scoreServiceList = scoreService.getList(sorted);
+        model.addAttribute("sList",scoreServiceList);
 
-        // scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
-        // 다시 DTO리스트로 변환해줘야한다
-
-        List<ScoreListResponseDTO> collect = scoreList.stream()
-                .map(ScoreListResponseDTO::new)
-                .collect(toList());
-
-        model.addAttribute("sList",collect);
         return "chap04/score-list";
     }
 
@@ -76,14 +71,8 @@ public class ScoreController {
     public String register(ScoreRequestDTO dto){
 
         // 입력 데이터(쿼리스트링) 읽기
-        System.out.println("/score/register : POST!!"+dto);
-
-        // dto(ScoreDTO)를 entity(Score)로 변환해야함
-        Score score = new Score(dto);
-
-        // save명령
-        repository.save(score);
-
+//        System.out.println("/score/register : POST!!"+dto);
+        scoreService.insertScore(dto);
         /*
             등록요청에서 JSP 뷰 포워딩을 하면
             갱신된 목록을 다시 한 번 저장소에서 불러와
@@ -100,7 +89,7 @@ public class ScoreController {
     public String remove(@RequestParam int stuNum){
         System.out.println("/score/remove : POST!!");
 
-        repository.deleteBy(stuNum);
+       scoreService.delete(stuNum);
 
         return "redirect:/score/list";
     }
