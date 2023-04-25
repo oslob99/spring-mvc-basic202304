@@ -27,7 +27,7 @@
     <div id="wrap">
 
         <div class="main-title-wrapper">
-            <h1 class="main-title">꾸러기 게시판</h1>
+            <h1 class="main-title">짱구 게시판</h1>
             <button class="add-btn">새 글 쓰기</button>
         </div>
 
