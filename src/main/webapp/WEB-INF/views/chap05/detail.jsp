@@ -53,15 +53,15 @@
 	<div class="container">
 		<div class="post-info">
 			<span>${b.title}</span>
-			<span>작성일: ${b.regDateTime}</span>
+			<span>작성일: ${b.date}</span>
 		</div>
         <div class="view">
             <i class="fas fa-eye"></i>
-            <span class="view-count">${b.viewCount}</span>
         </div>
 		<div class="post-content">
 			${b.content}
 		</div>
+		 <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
 	</div>
 </body>
 </html>

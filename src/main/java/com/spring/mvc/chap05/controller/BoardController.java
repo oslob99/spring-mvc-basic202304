@@ -51,8 +51,7 @@ public class BoardController {
 
     @GetMapping("/detail")
     public String detail(int boardNo,Model model){
-        Board board = boardService.showOne(boardNo);
-        model.addAttribute("b",board);
+        model.addAttribute("b",boardService.detailDto(boardNo));
         return "chap05/detail";
     }
 

@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.service;
 
+import com.spring.mvc.chap05.dto.BoardDetailDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardNewInsertDTO;
 import com.spring.mvc.chap05.entity.Board;
@@ -38,5 +39,13 @@ public class BoardService {
         boardRepository.deleteByNo(boardNo);
 
         return false;
+    }
+
+    public BoardDetailDTO detailDto(int boardNo){
+
+        Board board = showOne(boardNo);
+        System.out.println(board.getViewCount());
+        board.setViewCount(board.getViewCount()+1);
+        return new BoardDetailDTO(board);
     }
 }
