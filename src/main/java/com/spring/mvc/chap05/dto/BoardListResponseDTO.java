@@ -1,15 +1,19 @@
 package com.spring.mvc.chap05.dto;
 
 import com.spring.mvc.chap05.entity.Board;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
-@Getter
-@ToString @EqualsAndHashCode
+// 클라이언트에게 게시글 목록을 줄 때 스펙
+@Getter @ToString
+@EqualsAndHashCode
 public class BoardListResponseDTO {
+
     private final int boardNo;
     private final String shortTitle; // 5자 이상 줄임
     private final String shortContent; // 30자 이상 줄임
@@ -36,7 +40,6 @@ public class BoardListResponseDTO {
 
     private String makeShortTitle(String originTitle) {
         return sliceString(originTitle, 7);
-
     }
 
     /**
@@ -49,7 +52,8 @@ public class BoardListResponseDTO {
     private static String sliceString(String targetString, int wishLength) {
         return (targetString.length() > wishLength)
                 ? targetString.substring(0, wishLength) + "..."
-                : targetString;
+                : targetString
+                ;
     }
 
 }
