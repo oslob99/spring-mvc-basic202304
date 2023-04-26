@@ -106,33 +106,35 @@ public class ScoreController {
     @GetMapping("/detail")
     public String detail(int stuNum, Model model) {
         System.out.println("/score/detail : GET!");
-        retrieve(stuNum, model);
+        Score score = scoreService.retrieve(stuNum);
+        model.addAttribute("s",score);
         return "chap04/score-detail";
     }
 
 
     // 5. 수정 화면 열어주기
     @GetMapping("/modify")
-    public String modify(int stuNum, Model model) {
+    public String modify(int stu_num, Model model) {
         System.out.println("/score/modify : GET!");
-        retrieve(stuNum, model);
+        retrieve(stu_num, model);
         return "chap04/score-modify";
     }
 
     private void retrieve(int stuNum, Model model) {
         Score score = scoreService.retrieve(stuNum);
-        model.addAttribute("s", score);
+        model.addAttribute("ss", score);
     }
 
     // 6. 수정 완료 처리하기
     @PostMapping("/modify")
-    public String modify(int stuNum, ScoreRequestDTO dto) {
+    public String modify(ScoreRequestDTO dto) {
         System.out.println("/score/modify : POST!");
+        System.out.println(dto);
+//        Score score = scoreService.retrieve(stuNum);
+//        score.changeScore(dto);
+        scoreService.modifyScore(dto);
 
-        Score score = scoreService.retrieve(stuNum);
-        score.changeScore(dto);
-
-        return "redirect:/score/detail?stuNum=" + stuNum; // 상세보기페이지로 리다이렉트
+        return "redirect:/score/detail?stuNum=" + dto.getStu_num(); // 상세보기페이지로 리다이렉트
     }
 
 

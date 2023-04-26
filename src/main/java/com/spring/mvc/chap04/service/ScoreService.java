@@ -20,7 +20,7 @@ public class ScoreService {
     private final ScoreRepository scoreRepository;
 
     @Autowired
-    public ScoreService(@Qualifier("jdbc") ScoreRepository scoreRepository) {
+    public ScoreService(@Qualifier("spring") ScoreRepository scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
 
@@ -39,7 +39,7 @@ public class ScoreService {
                     .stream()
                     .map(ScoreListResponseDTO::new)
                     .collect(Collectors.toList());
-
+//        return null;
     }
 
 
@@ -63,6 +63,9 @@ public class ScoreService {
         // 만약에 스코어 전체데이터말고
         // 몇개만 추리고 전후처리해서 줘라
         return scoreRepository.findByStuNum(stuNum);
+    }
+    public void modifyScore(ScoreRequestDTO dto){
+        scoreRepository.modifyScore(dto);
     }
 
 }

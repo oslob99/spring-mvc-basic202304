@@ -91,5 +91,10 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         return scoreMap.get(stuNum);
     }
 
+    @Override
+    public boolean modifyScore(ScoreRequestDTO dto) {
+        return false;
+    }
+
 
 }
