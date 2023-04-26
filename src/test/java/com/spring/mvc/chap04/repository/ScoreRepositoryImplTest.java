@@ -68,7 +68,7 @@ class ScoreRepositoryImplTest {
         // given
         int stuNum = 2;
         // when
-        repository.deleteBy(stuNum);
+        repository.deleteByStuNum(stuNum);
         List<Score> scoreList = repository.findAll(sortedNum);
         Score score = repository.findByStuNum(stuNum);
         // then
