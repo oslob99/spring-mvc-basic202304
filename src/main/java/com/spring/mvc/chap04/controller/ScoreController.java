@@ -129,7 +129,7 @@ public class ScoreController {
     @PostMapping("/modify")
     public String modify(ScoreRequestDTO dto) {
         System.out.println("/score/modify : POST!");
-        System.out.println(dto);
+//        System.out.println(dto);
 //        Score score = scoreService.retrieve(stuNum);
 //        score.changeScore(dto);
         scoreService.modifyScore(dto);

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 @ToString @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Score {
 
     private String name; // 학생 이름
@@ -22,6 +23,7 @@ public class Score {
 
     public Score(ScoreRequestDTO dto) {
         this.name = dto.getName();
+        this.stuNum = dto.getStuNum();
         changeScore(dto);
     }
 

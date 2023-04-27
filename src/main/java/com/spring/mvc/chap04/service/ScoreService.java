@@ -3,6 +3,7 @@ package com.spring.mvc.chap04.service;
 import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
+import com.spring.mvc.chap04.repository.ScoreMapper;
 import com.spring.mvc.chap04.repository.ScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,10 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class ScoreService {
 
-    private final ScoreRepository scoreRepository;
+//    private final ScoreRepository scoreRepository;
+
+    private final ScoreMapper scoreRepository;
 
     @Autowired
-    public ScoreService(@Qualifier("spring") ScoreRepository scoreRepository) {
+//    public ScoreService(@Qualifier("spring") ScoreRepository scoreRepository) {
+//        this.scoreRepository = scoreRepository;
+//    }
+    public ScoreService(ScoreMapper scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
 
@@ -35,10 +41,10 @@ public class ScoreService {
 
         // scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
         // 다시 DTO리스트로 변환해줘야 한다.
-        return scoreRepository.findAll(sort)
-                    .stream()
-                    .map(ScoreListResponseDTO::new)
-                    .collect(Collectors.toList());
+        return scoreRepository.findAll()
+                .stream()
+                .map(ScoreListResponseDTO::new)
+                .collect(Collectors.toList());
 //        return null;
     }
 
@@ -64,8 +70,16 @@ public class ScoreService {
         // 몇개만 추리고 전후처리해서 줘라
         return scoreRepository.findByStuNum(stuNum);
     }
-    public void modifyScore(ScoreRequestDTO dto){
-        scoreRepository.modifyScore(dto);
+
+    public void modifyScore(ScoreRequestDTO dto) {
+        Score score = new Score(dto);
+//        Score score = Score.builder()
+//                .math(dto.getMath())
+//                .kor(dto.getKor())
+//                .eng(dto.getEng())
+//                .stuNum(dto.getStuNum())
+//                .build();
+        scoreRepository.modifyScore(score);
     }
 
 }
