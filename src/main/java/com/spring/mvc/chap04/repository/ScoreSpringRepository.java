@@ -56,8 +56,8 @@ public class ScoreSpringRepository implements ScoreRepository{
 
     @Override
     public boolean modifyScore(ScoreRequestDTO dto){
-        String sql = "UPDATE tbl_score set name=?, kor=?, eng=?, math? WHERE stu_num=?";
-        int result = jdbcTemplate.update(sql, dto.getName(), dto.getKor(), dto.getEng(), dto.getMath(), dto.getStu_num());
+        String sql = "UPDATE tbl_score set kor=?, eng=?, math=? WHERE stu_num=?";
+        int result = jdbcTemplate.update(sql, dto.getKor(), dto.getEng(), dto.getMath(), dto.getStuNum());
         return result == 1;
     }
 

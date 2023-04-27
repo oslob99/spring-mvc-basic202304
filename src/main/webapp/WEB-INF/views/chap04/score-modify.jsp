@@ -59,9 +59,9 @@
 
     <div class="wrap">
         <section class="score-main">
-            <h1>${ss.name}님 성적 정보 수정하기~</h1>
+            <h1 name="name">${ss.name}님 성적 정보 수정하기~</h1>
             <form action="/score/modify" method="post">
-                <input type="hidden" name="stu_num" value="${ss.stuNum}">
+                <input type="hidden" name="stuNum" value="${ss.stuNum}">
                 <ul>
                     <li># 국어: <input type="text" name="kor" value="${ss.kor}"></li>
                     <li># 영어: <input type="text" name="eng" value="${ss.eng}"></li>

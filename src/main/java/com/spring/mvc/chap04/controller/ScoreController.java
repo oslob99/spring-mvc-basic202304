@@ -114,9 +114,9 @@ public class ScoreController {
 
     // 5. 수정 화면 열어주기
     @GetMapping("/modify")
-    public String modify(int stu_num, Model model) {
+    public String modify(int num, Model model) {
         System.out.println("/score/modify : GET!");
-        retrieve(stu_num, model);
+        retrieve(num, model);
         return "chap04/score-modify";
     }
 
@@ -134,7 +134,7 @@ public class ScoreController {
 //        score.changeScore(dto);
         scoreService.modifyScore(dto);
 
-        return "redirect:/score/detail?stuNum=" + dto.getStu_num(); // 상세보기페이지로 리다이렉트
+        return "redirect:/score/detail?stuNum=" + dto.getStuNum(); // 상세보기페이지로 리다이렉트
     }
 
 
