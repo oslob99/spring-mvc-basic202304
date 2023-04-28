@@ -13,15 +13,25 @@
         VALUES (#{name}, #{kor}, #{eng}, #{math}, #{total}, #{average}, #{grade})
     </insert>
 
-    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">
-        <result property="stuNum" column="stu_num"/>
-    </resultMap>
+<!--    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">-->
+<!--        <result property="stuNum" column="stu_num"/>-->
+<!--    </resultMap>-->
 
-    <select id="findAll" resultMap="score">
-        SELECT * FROM tbl_score
+    <select id="findAll" resultType="score">
+        SELECT *
+        FROM tbl_score
+        <if test="sort == 'num'">
+            ORDER BY stu_num
+        </if>
+        <if test="sort == 'name'">
+            ORDER BY stu_name
+        </if>
+        <if test="sort == 'avg'">
+            ORDER BY average DESC
+        </if>
     </select>
 
-    <select id="findByStuNum" resultMap="score">
+    <select id="findByStuNum" resultType="score">
         SELECT * FROM tbl_score
         WHERE stu_num=#{stuNum}
     </select>

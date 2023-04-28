@@ -62,6 +62,7 @@
 			${b.content}
 		</div>
 		 <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
+		 <button class="list-btn" type="button" onclick="window.location.href='/board/modify?bno=${b.boardNo}'">수정</button>
 	</div>
 </body>
 </html>

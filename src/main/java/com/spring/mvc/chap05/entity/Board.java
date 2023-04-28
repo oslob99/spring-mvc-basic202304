@@ -5,10 +5,20 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/*
+    create table tbl_board(
+	board_no int(10) auto_increment primary key,
+	title varchar(80) not null,
+	content varchar(2000),
+	view_count int(10) default 0,
+	reg_date_time datetime default current_timestamp
+);
+ */
 @Setter @Getter
 @ToString @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+//@Builder
 public class Board {
 
     private int boardNo; // 게시글 번호

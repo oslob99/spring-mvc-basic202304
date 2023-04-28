@@ -1,7 +1,9 @@
 package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
+import com.spring.mvc.chap05.dto.BoardModifyDTD;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -58,6 +60,22 @@ public class BoardController {
         System.out.println("/board/detail : GET");
         model.addAttribute("b", boardService.getDetail(bno));
         return "chap05/detail";
+    }
+
+    // 글 수정 페이지 요청
+    @GetMapping("/modify")
+    public String goModify(int bno,Model model){
+        model.addAttribute("b",boardService.getDetail(bno));
+        return "chap05/modify";
+    }
+
+    // 글 수정 요청
+    @PostMapping("/modify")
+    public String modified(Board dto){
+        boardService.modify(dto);
+        System.out.println(dto.getBoardNo());
+//        System.out.println("들옴");
+        return "redirect:/board/list";
     }
 
 }

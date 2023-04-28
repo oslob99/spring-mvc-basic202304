@@ -10,9 +10,9 @@ public interface ScoreMapper {
 
     // 성적 정보 전체 목록 조회
     List<Score> findAll(); // 일반 목록조회
-//    default List<Score> findAll(String sort) {
-//        return null;
-//    } // 정렬 목록조회
+    default List<Score> findAll(String sort) {
+        return null;
+    } // 정렬 목록조회
 
     // 성적 정보 등록
     boolean save(Score score);

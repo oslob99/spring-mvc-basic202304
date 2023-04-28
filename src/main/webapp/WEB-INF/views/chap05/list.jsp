@@ -35,9 +35,9 @@
 
         <div class="card-container">
 
-            <c:forEach var="b" items="${boardList}">
+            <c:forEach var="b" items="${bList}">
             <div class="card-wrapper">
-                <section class="card" onclick="window.location.href='/board/detail?boardNo=${b.boardNo}'">
+                <section class="card" onclick="window.location.href='/board/detail?bno=${b.boardNo}'">
                     <div class="card-title-wrapper">
                         <h2 class="card-title">${b.shortTitle}</h2>
                         <input type="hidden" id="boardNo" value="${b.boardNo}">
@@ -56,7 +56,7 @@
                     </div>
                 </section>
                 <div class="card-btn-group">
-                    <button class="del-btn" onclick="window.location.href='/board/remove?boardNo=${b.boardNo}'">
+                    <button class="del-btn" onclick="window.location.href='/board/delete?bno=${b.boardNo}'">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>

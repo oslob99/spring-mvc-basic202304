@@ -56,12 +56,12 @@ public class ScoreController {
     // 1. 성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
     public String list(Model model,
-                      @RequestParam(defaultValue = "num") String sort) {
+                      @RequestParam(defaultValue = "num") String sorted) {
         System.out.println("/score/list : GET!");
-        System.out.println("정렬 요구사항: " + sort);
+        System.out.println("정렬 요구사항: " + sorted);
 
         List<ScoreListResponseDTO> responseDTOList
-                = scoreService.getList(sort);
+                = scoreService.getList(sorted);
 
 //        List<ScoreListResponseDTO> responseDTOList = new ArrayList<>();
 //        for (Score s : scoreList) {
