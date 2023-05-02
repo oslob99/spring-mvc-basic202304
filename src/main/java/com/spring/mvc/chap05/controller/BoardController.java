@@ -6,6 +6,7 @@ import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
+import com.spring.mvc.chap05.entity.Reply;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +71,9 @@ public class BoardController {
     @GetMapping("/detail")
     public String detail(int bno, @ModelAttribute("s") Search search, Model model) {
         System.out.println("/board/detail : GET");
+        List<Reply> replyList = boardService.getReplyList(bno, search);
         model.addAttribute("b", boardService.getDetail(bno));
+        model.addAttribute("rList",replyList);
 //        model.addAttribute("s",search);
         return "chap05/detail";
     }
@@ -90,5 +93,16 @@ public class BoardController {
 //        System.out.println("들옴");
         return "redirect:/board/list";
     }
+
+    // 댓글 추가 페이지 요청
+    @PostMapping("/reply")
+    public String moveReply(Reply reply,Search search,Model model){
+        System.out.println(reply);
+        reply.setReplyWriter("하하하");
+        boardService.saveReply(reply);
+        model.addAttribute("r",reply);
+        return String.format("redirect:/board/detail?bno=%d&pageNo=%d&type=%s&keyword=%s",reply.getBoardNo(),search.getPageNo(),search.getType(),search.getKeyword());
+    }
+
 
 }

@@ -6,7 +6,9 @@ import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
+import com.spring.mvc.chap05.entity.Reply;
 import com.spring.mvc.chap05.repository.BoardMapper;
+import com.spring.mvc.chap05.repository.ReplyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class BoardService {
 
     //    private final BoardRepository boardRepository;
     private final BoardMapper boardRepository;
+    private final ReplyMapper replyMapper;
 
     // 중간처리 기능 자유롭게 사용
     // 목록 중간처리
@@ -56,7 +59,17 @@ public class BoardService {
     }
 
     public int getCount(Search search) {
-
         return boardRepository.count(search);
+    }
+
+    // ------------------ 댓글 기능
+
+    public boolean saveReply(Reply reply){
+        return replyMapper.save(reply);
+    }
+
+    public List<Reply> getReplyList(int bno, Search search) {
+        List<Reply> replyList = replyMapper.findAll(bno, search);
+        return replyList;
     }
 }
