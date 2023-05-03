@@ -7,72 +7,53 @@
 <title>Insert title here</title>
 <style>
     .login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff;
-  padding: 30px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+width: 350px;
+margin: 0 auto;
+background: #fff;
+padding: 30px;
+border-radius: 5px;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
-  background-image: url('https://maplestory.nexon.net/etc/designs/ms/nx2016-global/images/logo.png');
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  width: 200px;
-  height: 50px;
-  margin-bottom: 20px;
+h2 {
+text-align: center;
+margin-bottom: 20px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+input[type="text"],
+input[type="password"] {
+width: 100%;
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 5px;
+margin-bottom: 20px;
 }
 
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
+button[type="submit"] {
+width: 100%;
+background: #4CAF50;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 10px;
+margin-top: 10px;
+font-size: 16px;
 }
 
-input {
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
-}
 
-button {
-  background-color: #ff6400;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #e64c00;
-}
-
-</style>
+ </style>
 </head>
 <body>
+   
     <div class="login-form">
-        <div class="logo"></div>
-        <form>
-          <div class="form-group">
-            <label for="id">ID</label>
-            <input type="text" id="id" name="id" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-          </div>
-          <button type="submit">Login</button>
+        <h2>Login</h2>
+        <form action="/board/login" method="post">
+          <input type="text" name="id" placeholder="ID">
+          <input type="password" name="pwd" placeholder="Password">
+          <button type="submit">Sign In</button>
         </form>
       </div>
+      
       
 </body>
 </html>

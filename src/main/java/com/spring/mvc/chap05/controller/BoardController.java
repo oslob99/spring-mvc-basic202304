@@ -28,6 +28,19 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    // 로그인 요청
+    @GetMapping("/login")
+    public String loginForm(){
+
+        return "chap05/login";
+    }
+
+    @PostMapping("/login")
+    public String loginReq(){
+
+        return "";
+    }
+
     // 목록 조회 요청
     @GetMapping("/list")
     public String list(Search page, Model model) {

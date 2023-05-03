@@ -77,4 +77,17 @@ class ReplyMapperTest {
         assertEquals(10, replyMapper.count(boardNo));
     }
 
+    @Test
+    void BulkReplyInsert(){
+
+        for (int i = 1; i <= 300; i++) {
+            Reply reply = Reply.builder()
+                    .replyText("우우우우"+i)
+                    .replyWriter("나야나"+i)
+                    .boardNo(300L)
+                    .build();
+            replyMapper.save(reply);
+        }
+    }
+
 }
