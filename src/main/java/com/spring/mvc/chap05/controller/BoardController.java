@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -101,7 +102,14 @@ public class BoardController {
         reply.setReplyWriter("하하하");
         boardService.saveReply(reply);
         model.addAttribute("r",reply);
-        return String.format("redirect:/board/detail?bno=%d&pageNo=%d&type=%s&keyword=%s",reply.getBoardNo(),search.getPageNo(),search.getType(),search.getKeyword());
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/board/detail")
+                .queryParam("bno", reply.getBoardNo())
+                .queryParam("pageNo", search.getPageNo())
+                .queryParam("type", search.getType())
+                .queryParam("keyword", search.getKeyword());
+
+        return "redirect:" + builder.toUriString();
+//        return String.format("redirect:/board/detail?bno=%d&pageNo=%d&type=%s&keyword=%s",reply.getBoardNo(),search.getPageNo(),search.getType(),search.getKeyword());
     }
 
 
