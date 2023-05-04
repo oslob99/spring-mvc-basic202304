@@ -1,6 +1,7 @@
 package com.spring.mvc.chap05.api;
 
 import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.ReplyModifyRequestDTO;
 import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.entity.Reply;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/replies")
 @Slf4j
+// 클라이언트의 접근을 어떤 app에서만 허용할 것인가
+@CrossOrigin(origins = "http://127.0.0.1:5501")
 public class ReplyController {
 
     private  final ReplyService replyService;
@@ -70,4 +74,49 @@ public class ReplyController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+
+    // 댓글 삭제 요청
+    @DeleteMapping("/{replyNo}")
+    public ResponseEntity<?> remove(
+            @PathVariable(required = false) Long replyNo
+    ) {
+        if (replyNo == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("댓글 번호를 보내주세요!");
+        }
+
+        log.info("/api/v1/replies/{} DELETE!", replyNo);
+
+        try {
+            ReplyListResponseDTO responseDTO
+                    = replyService.delete(replyNo);
+            return ResponseEntity
+                    .ok()
+                    .body(responseDTO);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body(e.getMessage());
+        }
+
+    }
+
+    // 댓글 수정 요청
+    @RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH})
+    public ResponseEntity<?> modify(
+            // DTO새로 만드세요 검증 넣고
+            @Validated @RequestBody ReplyModifyRequestDTO dto
+            ,BindingResult result
+    ){
+        ReplyListResponseDTO responseDTO = null;
+        try {
+            responseDTO = replyService.modifyRequestDTO(dto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("제대로 입력하거라");
+        }
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
 }
