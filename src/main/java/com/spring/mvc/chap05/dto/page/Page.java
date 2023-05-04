@@ -1,11 +1,10 @@
 package com.spring.mvc.chap05.dto.page;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
+@AllArgsConstructor
 @ToString
 public class Page {
 
