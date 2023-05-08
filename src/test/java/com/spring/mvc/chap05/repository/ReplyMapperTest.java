@@ -47,7 +47,7 @@ class ReplyMapperTest {
     @Rollback // 테스트 끝난 이후 롤백해라
     void saveTest(){
         // given
-        long boardNo = 3L;
+        long boardNo = 300L;
         Reply newReply = Reply.builder()
                 .replyText("세이브")
                 .replyWriter("헉힉")
@@ -57,7 +57,7 @@ class ReplyMapperTest {
         boolean flag = replyMapper.save(newReply);
         // then
         assertTrue(flag); // 세이브가 성공했을것이라고 단언
-        assertEquals(12,replyMapper.count(boardNo));
+        assertEquals(301,replyMapper.count(boardNo));
     }
 
     @Test
