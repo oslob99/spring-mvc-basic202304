@@ -15,6 +15,7 @@ public class DatabaseConfig {
     // USERNAME : DB 계정명
     // PASSWORD : DB password
     // DRIVER CLASS : DBMS마다 설치한 커넥터 드라이버
+    //zz
 
     // 커넥션 풀 설정
     // DB 접속 시 사용하는 리소슬을 관리하는 프로그램
