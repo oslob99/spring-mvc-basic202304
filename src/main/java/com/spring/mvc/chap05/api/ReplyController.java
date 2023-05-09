@@ -114,6 +114,7 @@ public class ReplyController {
         try {
             responseDTO = replyService.modifyRequestDTO(dto);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("제대로 입력하거라");
         }
         return ResponseEntity.ok().body(responseDTO);
