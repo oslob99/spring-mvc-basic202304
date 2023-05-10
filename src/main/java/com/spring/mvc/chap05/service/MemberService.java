@@ -42,7 +42,7 @@ public class MemberService {
         return flagNum == 1;
     }
 
-
+    // 로그인 기능
     public LoginResult authenticate(LoginRequestDTO dto) {
         Member fountMember = memberMapper.findMember(dto.getAccount());
 

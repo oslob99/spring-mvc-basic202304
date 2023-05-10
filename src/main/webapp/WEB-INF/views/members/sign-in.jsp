@@ -103,5 +103,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const serverMessage = '${msg}';
+        console.log('msg:' + serverMessage);
+
+        if(serverMessage === 'NO_ACC'){
+            alert('회원가입은 했냐?');
+        }else if(serverMessage === 'NO_PW'){
+            alert('비번 틀림요');
+        }
+
+    </script>
     
 </body>
