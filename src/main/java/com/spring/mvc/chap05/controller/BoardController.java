@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @Controller
@@ -43,7 +47,32 @@ public class BoardController {
 
     // 목록 조회 요청
     @GetMapping("/list")
-    public String list(Search page, Model model) {
+    public String list(Search page, Model model
+                        , HttpServletRequest request) {
+        boolean flag = false;
+
+        try {
+            InetAddress ipAddress = InetAddress.getLocalHost();
+            log.info("현재 아이피: {}",ipAddress.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        // 세션을 확인
+        Object login = request.getSession().getAttribute("login");
+        if (login != null) flag = true;
+
+
+        // 쿠키를 확인
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies) {
+//            if (cookie.getName().equals("login")){
+//                flag = true;
+//                break;
+//            }
+//        }
+        if (!flag) return "redirect:/members/sign-in";
+
         log.info("/board/list : GET");
         log.info("page : {}",page);
         List<BoardListResponseDTO> responseDTOS
