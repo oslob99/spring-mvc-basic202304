@@ -127,6 +127,7 @@
 	<div class="container">
 		<%@ include file="../include/header.jsp" %>
 		<div class="post-info">
+			<span>작성자: ${b.writer}</span>
 			<span>${b.title}</span>
 			<span>작성일: ${b.date}</span>
 		</div>

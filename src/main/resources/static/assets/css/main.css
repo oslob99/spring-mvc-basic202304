@@ -42,7 +42,7 @@ header .inner-header {
     /* background: orange; */
     width: 92%;
     margin: 0 auto;
-    height: 120px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;    

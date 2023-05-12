@@ -13,10 +13,13 @@
 <body>
     <%@ include file="../include/header.jsp" %>
     <div id="wrap">
-        
+
         <div class="main-title-wrapper">
             <h1 class="main-title">꾸러기 게시판</h1>
-            <button class="add-btn">새 글 쓰기</button>
+
+            <c:if test="${login != null}">
+                <button class="add-btn">새 글 쓰기</button>
+            </c:if>
         </div>
         <div class="top-section">
             <!-- 검색창 영역 -->
@@ -81,26 +84,31 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-lg pagination-custom">
                     <c:if test="${maker.prev}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=0&type=${s.type}&keyword=${s.keyword}">first</a></li>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=0&type=${s.type}&keyword=${s.keyword}">first</a></li>
                     </c:if>
                     <c:if test="${maker.prev}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
                         </li>
                     </c:if>
 
                     <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
                         <li data-page-num="${i}" class="page-item">
-                            <a class="page-link" href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
+                            <a class="page-link"
+                                href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
                         </li>
                     </c:forEach>
 
 
                     <c:if test="${maker.next}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
                         </li>
                     </c:if>
                     <c:if test="${maker.next}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">last</a>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">last</a>
                         </li>
                     </c:if>
                 </ul>
@@ -159,7 +167,8 @@
                 // section태그에 붙은 글번호 읽기
                 const bno = e.target.closest('section.card').dataset.bno;
                 // 요청 보내기
-                window.location.href = '/board/detail?bno=' + bno+'&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}';
+                window.location.href = '/board/detail?bno=' + bno +
+                    '&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}';
             }
         });
 
@@ -175,15 +184,15 @@
         function removeDown(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard?.removeAttribute('id', 'card-down');
+            $targetCard ? .removeAttribute('id', 'card-down');
         }
 
         function removeHover(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard?.classList.remove('card-hover');
+            $targetCard ? .classList.remove('card-hover');
 
-            const $delBtn = e.target.closest('.card-wrapper')?.querySelector('.del-btn');
+            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
             $delBtn.style.opacity = '0';
         }
 
@@ -194,9 +203,9 @@
             if (!e.target.matches('.card-container *')) return;
 
             const $targetCard = e.target.closest('.card');
-            $targetCard?.classList.add('card-hover');
+            $targetCard ? .classList.add('card-hover');
 
-            const $delBtn = e.target.closest('.card-wrapper')?.querySelector('.del-btn');
+            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
             $delBtn.style.opacity = '1';
         }
 
@@ -205,7 +214,7 @@
             if (e.target.matches('.card-container .card-btn-group *')) return;
 
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard?.setAttribute('id', 'card-down');
+            $targetCard ? .setAttribute('id', 'card-down');
         };
 
         $cardContainer.onmouseup = removeDown;
