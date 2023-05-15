@@ -4,7 +4,9 @@ package com.spring.mvc.util;
 
 import com.spring.mvc.chap05.dto.response.LoginUserResponseDTO;
 import com.spring.mvc.chap05.entity.Auth;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginUtil {
@@ -39,5 +41,8 @@ public class LoginUtil {
         return targetAccount.equals(getCurrentLoginMemberAccount(session));
     }
 
-
+    // 자동 로그인 여부 확인
+    public  static  boolean isAutoLogin(HttpServletRequest request){
+        return WebUtils.getCookie(request, AUTO_LOGIN_COOKIE) != null;
+    }
 }
