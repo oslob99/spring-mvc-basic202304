@@ -1,6 +1,7 @@
 package com.spring.mvc.spring_jdbc;
 
 import com.spring.mvc.jdbc.Person;
+import org.eclipse.jdt.internal.compiler.ast.EqualExpression;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,50 +17,50 @@ class PersonSpringRepositoryTest {
     PersonSpringRepository repository;
 
     @Test
-    void savePersonTest(){
+    void savePersonTest() {
         // given
         Person p = new Person();
-        p.setPersonName("김스프");
+        p.setPersonName("김스프링");
         p.setPersonAge(2);
-        // when
+        //when
         repository.savePerson(p);
-        // then
     }
 
     @Test
-    void removePersonTest(){
+    void removePersonTest() {
         // given
-        long id = 2L;
-        // when
+        long id = 4L;
+        //when
         repository.removePerson(id);
     }
 
     @Test
-    void updatePersonTest(){
-        Person person = new Person();
-        person.setPersonName("신형만");
-        person.setPersonAge(44);
-        person.setId(1L);
-
-        boolean flag = repository.updatePerson(person);
-
+    void modifyPersonTest() {
+        // given
+        Person p = new Person();
+        p.setId(6L);
+        p.setPersonName("만지호");
+        p.setPersonAge(10000);
+        // when
+        boolean flag = repository.modify(p);
+        // then
         assertTrue(flag);
     }
 
     @Test
-    void findAllTest(){
+    void findAllTest() {
         List<Person> people = repository.findAll();
-        for (Person person : people) {
-            System.out.println("person = " + person);
-
+        for (Person p : people) {
+            System.out.println("p = " + p);
         }
     }
 
     @Test
-    void findOneTest(){
-        long id = 3L;
-        Person person = repository.findOne(id);
-        System.out.println("person = " + person);
+    void findOneTest() {
+        Person p = repository.findOne(5L);
+        System.out.println("p = " + p);
+
+        assertEquals("춘식이", p.getPersonName());
     }
 
 }

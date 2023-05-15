@@ -9,6 +9,7 @@
     <title>게시판 글쓰기</title>
 
     <%@ include file="../include/static-head.jsp" %>
+
     <!-- ck editor -->
     <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
     <style>
@@ -80,8 +81,10 @@
     </style>
 </head>
 <body>
+
+    <%@ include file="../include/header.jsp" %>
+
     <div id="wrap" class="form-container">
-        <%@ include file="../include/header.jsp" %>
         <h1>꾸러기 게시판 글쓰기</h1>
         <form action="/board/write" method="post">
             <label for="title">제목</label>

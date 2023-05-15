@@ -1,11 +1,12 @@
-package com.spring.mvc.chap05.dto;
+package com.spring.mvc.chap05.dto.request;
 
 import lombok.*;
 
-@Getter @Setter
+@Setter @Getter
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
 public class LoginRequestDTO {
+
     private String account;
     private String password;
     private boolean autoLogin;

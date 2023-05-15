@@ -56,12 +56,12 @@ public class ScoreController {
     // 1. 성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
     public String list(Model model,
-                      @RequestParam(defaultValue = "num") String sorted) {
+                      @RequestParam(defaultValue = "num") String sort) {
         System.out.println("/score/list : GET!");
-        System.out.println("정렬 요구사항: " + sorted);
+        System.out.println("정렬 요구사항: " + sort);
 
         List<ScoreListResponseDTO> responseDTOList
-                = scoreService.getList(sorted);
+                = scoreService.getList(sort);
 
 //        List<ScoreListResponseDTO> responseDTOList = new ArrayList<>();
 //        for (Score s : scoreList) {
@@ -106,35 +106,33 @@ public class ScoreController {
     @GetMapping("/detail")
     public String detail(int stuNum, Model model) {
         System.out.println("/score/detail : GET!");
-        Score score = scoreService.retrieve(stuNum);
-        model.addAttribute("s",score);
+        retrieve(stuNum, model);
         return "chap04/score-detail";
     }
 
 
     // 5. 수정 화면 열어주기
     @GetMapping("/modify")
-    public String modify(int num, Model model) {
+    public String modify(int stuNum, Model model) {
         System.out.println("/score/modify : GET!");
-        retrieve(num, model);
+        retrieve(stuNum, model);
         return "chap04/score-modify";
     }
 
     private void retrieve(int stuNum, Model model) {
         Score score = scoreService.retrieve(stuNum);
-        model.addAttribute("ss", score);
+        model.addAttribute("s", score);
     }
 
     // 6. 수정 완료 처리하기
     @PostMapping("/modify")
-    public String modify(ScoreRequestDTO dto) {
+    public String modify(int stuNum, ScoreRequestDTO dto) {
         System.out.println("/score/modify : POST!");
-//        System.out.println(dto);
-//        Score score = scoreService.retrieve(stuNum);
-//        score.changeScore(dto);
-        scoreService.modifyScore(dto);
 
-        return "redirect:/score/detail?stuNum=" + dto.getStuNum(); // 상세보기페이지로 리다이렉트
+        Score score = scoreService.retrieve(stuNum);
+        score.changeScore(dto);
+
+        return "redirect:/score/detail?stuNum=" + stuNum; // 상세보기페이지로 리다이렉트
     }
 
 

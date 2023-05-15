@@ -19,13 +19,9 @@ import java.util.stream.Collectors;
 public class ScoreService {
 
 //    private final ScoreRepository scoreRepository;
-
     private final ScoreMapper scoreRepository;
 
     @Autowired
-//    public ScoreService(@Qualifier("spring") ScoreRepository scoreRepository) {
-//        this.scoreRepository = scoreRepository;
-//    }
     public ScoreService(ScoreMapper scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
@@ -41,11 +37,11 @@ public class ScoreService {
 
         // scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
         // 다시 DTO리스트로 변환해줘야 한다.
-        return scoreRepository.findAll()
-                .stream()
-                .map(ScoreListResponseDTO::new)
-                .collect(Collectors.toList());
-//        return null;
+        return scoreRepository.findAll(sort)
+                    .stream()
+                    .map(ScoreListResponseDTO::new)
+                    .collect(Collectors.toList());
+
     }
 
 
@@ -69,17 +65,6 @@ public class ScoreService {
         // 만약에 스코어 전체데이터말고
         // 몇개만 추리고 전후처리해서 줘라
         return scoreRepository.findByStuNum(stuNum);
-    }
-
-    public void modifyScore(ScoreRequestDTO dto) {
-        Score score = new Score(dto);
-//        Score score = Score.builder()
-//                .math(dto.getMath())
-//                .kor(dto.getKor())
-//                .eng(dto.getEng())
-//                .stuNum(dto.getStuNum())
-//                .build();
-        scoreRepository.modifyScore(score);
     }
 
 }

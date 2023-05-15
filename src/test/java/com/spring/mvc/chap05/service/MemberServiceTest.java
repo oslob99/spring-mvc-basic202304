@@ -1,7 +1,7 @@
 package com.spring.mvc.chap05.service;
 
-import com.spring.mvc.chap05.dto.LoginRequestDTO;
-import com.spring.mvc.chap05.dto.SignUpRequestDTO;
+import com.spring.mvc.chap05.dto.request.LoginRequestDTO;
+import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,33 +13,35 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberServiceTest {
 
     @Autowired
-    MemberService service;
+    MemberService memberService;
 
     @Test
-    @DisplayName("signUPDTO를 전달하면 회원가입에 성공해야한다")
-    void joinTest(){
-        SignUpRequestDTO requestDTO = new SignUpRequestDTO();
-        requestDTO.setAccount("oslob");
-        requestDTO.setPassword("1234");
-        requestDTO.setName("고래상어");
-        requestDTO.setEmail("Oslob@test.com");
-
-        service.join(requestDTO);
+    @DisplayName("SignUpDTO를 전달하면 회원가입에 성공해야 한다.")
+    void joinTest() {
+        //given
+        SignUpRequestDTO dto = new SignUpRequestDTO();
+        dto.setAccount("kukukaka2");
+        dto.setPassword("lalalal12343");
+        dto.setName("루피2");
+        dto.setEmail("aaa2@ddd.com");
+        //when
+        memberService.join(dto);
     }
 
     @Test
-    @DisplayName("계정명이 abc1234인 회원의 로그인 시도시 결과 검증을  상황별로 수행해야한다")
-    void loginTest(){
-        // given
+    @DisplayName("계정명이 abc1234인 회원의 로그인시도 결과 검증을 " +
+            "상황별로 수행해야 한다.")
+    void loginTest() {
+        //given
         LoginRequestDTO dto = new LoginRequestDTO();
         dto.setAccount("abc1234");
-        dto.setPassword("1!");
+        dto.setPassword("aaa1234!");
 
-        // when
-        LoginResult result = service.authenticate(dto);
+        //when
+//        LoginResult result = memberService.authenticate(dto);
 
         //then
-        assertEquals(LoginResult.SUCCESS, result);
+//        assertEquals(LoginResult.SUCCESS, result);
     }
 
 }

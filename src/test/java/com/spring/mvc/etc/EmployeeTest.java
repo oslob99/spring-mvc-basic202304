@@ -2,25 +2,35 @@ package com.spring.mvc.etc;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
 
-
     @Test
-    void tttt(){
+    void tttt() {
+
+        Employee.EmployeeBuilder builder = Employee.builder();
+        Employee.EmployeeBuilder eb1 = builder.empName("홍길동");
+        Employee.EmployeeBuilder eb2 = eb1.position("과장");
+        Employee employee = eb2.build();
+
         Employee e = Employee.builder()
                 .position("대리")
-                .empName("홍홍홍")
+                .empName("홍길동")
+                .hireDate(LocalDate.of(2019, 3, 15))
                 .build();
+
         System.out.println("e = " + e);
 
+
         Actor actor = Actor.builder()
-                .actorName("하하")
-                .actorAge(12)
-                .hasPhone(true)
+                .actorName("장동건")
+                .hasPhone(false)
+                .actorAge(40)
                 .build();
-        System.out.println("actor = " + actor);
 
     }
+
 }

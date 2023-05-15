@@ -5,14 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/hw")
 public class LoginController {
-     String result = "";
-    String correctId = "grape111";
-    String correctPwd = "ggg9999";
+
     /*
         1번요청: 로그인 폼 화면 열어주기
         - 요청 URL : /hw/s-login-form : GET
@@ -21,33 +18,36 @@ public class LoginController {
 
         2번요청: 로그인 검증하기
         - 로그인 검증: 아이디를 grape111이라고 쓰고 비번을 ggg9999 라고 쓰면 성공
-        - 요청 URL : /hw/s-login-check
+        - 요청 URL : /hw/s-login-check : POST
         - 포워딩 jsp파일 경로:  /WEB-INF/views/chap03/s-result.jsp
         - jsp에게 전달할 데이터: 로그인 성공여부, 아이디 없는경우, 비번 틀린경우
 
      */
-    @GetMapping("/login")
-    public String loginForm(){
-        System.out.println("들어옴");
+    //로그인 양식화면을 열어주는 요청처리
+    @GetMapping("/s-login-form")
+    public String sLoginForm() {
         return "chap03/s-form";
     }
 
+
+    //로그인 검증 요청처리
     @PostMapping("/s-login-check")
-    public String loginCheck(@RequestParam String id, @RequestParam String pwd,
-                             Model model){
-//        System.out.println("id = " + id);
-//        System.out.println("pwd = " + pwd);
+    public String sLoginCheck(
+            String id, String pw,
+            Model model) {
 
-        if (correctId.equals(id)){
-            if (correctPwd.equals(pwd)){
-                result = "로그인 성공";
-            }else result = "비밀번호가 틀렸습니다";
-        }else result = "아이디가 존재하지 않습니다";
-
-        model.addAttribute("check",result);
-
+        String result;
+        //검증
+        if (id.equals("grape111")) {
+            if (pw.equals("ggg9999")) {
+                result = "success";
+            } else {
+                result = "f-pw";
+            }
+        } else {
+            result = "f-id";
+        }
+        model.addAttribute("result", result);
         return "chap03/s-result";
     }
-
-
 }

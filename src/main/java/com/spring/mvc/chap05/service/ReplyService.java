@@ -1,9 +1,9 @@
 package com.spring.mvc.chap05.service;
 
-import com.spring.mvc.chap05.dto.ReplyDetailResponseDTO;
-import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
-import com.spring.mvc.chap05.dto.ReplyModifyRequestDTO;
-import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
+import com.spring.mvc.chap05.dto.request.ReplyModifyRequestDTO;
+import com.spring.mvc.chap05.dto.response.ReplyDetailResponseDTO;
+import com.spring.mvc.chap05.dto.response.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.request.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.entity.Reply;
@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -25,40 +26,43 @@ public class ReplyService {
     private final ReplyMapper replyMapper;
 
     // 댓글 목록 조회 서비스
-    public ReplyListResponseDTO getList(long boardNo, Page page){
+    public ReplyListResponseDTO getList(long boardNo, Page page) {
 
         List<ReplyDetailResponseDTO> replies = replyMapper.findAll(boardNo, page)
                 .stream()
-                .map(reply -> new ReplyDetailResponseDTO(reply))
-                .collect(Collectors.toList());
+                .map(ReplyDetailResponseDTO::new)
+                .collect(toList());
 
         int count = replyMapper.count(boardNo);
+
         return ReplyListResponseDTO.builder()
                 .count(count)
-                .pageInfo(new PageMaker(page,count))
+                .pageInfo(new PageMaker(page, count))
                 .replies(replies)
                 .build();
     }
 
     // 댓글 등록 서비스
     public ReplyListResponseDTO register(final ReplyPostRequestDTO dto)
-            throws SQLException{
+        throws SQLException
+    {
         log.debug("register service execute!!");
         // dto를 entity로 변환
         Reply reply = dto.toEntity();
         boolean flag = replyMapper.save(reply);
         // 예외 처리
         if (!flag) {
-            log.warn("replu registered fail!");
-            throw new SQLException("댓글 저장 실패");
+            log.warn("reply registered fail!");
+            throw new SQLException("댓글 저장 실패!");
         }
-        return getList(dto.getBno(),new Page(1,10));
+        return getList(dto.getBno(), new Page(1, 10));
     }
 
     // 댓글 삭제 서비스
-    @Transactional // 여러개의 쿼리문이 하나로 묶여서 하나라도 에러가 나면 에러, 트랜잭션 처리
+    @Transactional // 트랜잭션 처리
     public ReplyListResponseDTO delete(final long replyNo)
-            throws Exception {
+        throws Exception {
+
         long boardNo = replyMapper.findOne(replyNo).getBoardNo();
         replyMapper.deleteOne(replyNo);
 
@@ -68,14 +72,17 @@ public class ReplyService {
         );
     }
 
+
     // 댓글 수정 서비스
-    public ReplyListResponseDTO modifyRequestDTO(final ReplyModifyRequestDTO dto)
-    throws Exception{
-        boolean flag = replyMapper.modify(dto.toEntity());
-        if (!flag) throw new Exception("댓글 수정 실패");
-        return getList(dto.getBoardNo(),new Page(1,10));
+    @Transactional
+    public ReplyListResponseDTO modify(final ReplyModifyRequestDTO dto)
+        throws Exception {
+
+        replyMapper.modify(dto.toEntity());
+        return getList(
+                dto.getBno()
+                , new Page(1, 10)
+        );
     }
-
-
 
 }

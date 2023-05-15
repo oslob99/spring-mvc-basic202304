@@ -1,4 +1,4 @@
-package com.spring.mvc.chap05.dto;
+package com.spring.mvc.chap05.dto.response;
 
 import com.spring.mvc.chap05.entity.Board;
 import lombok.EqualsAndHashCode;
@@ -19,6 +19,8 @@ public class BoardListResponseDTO {
     private final String shortContent; // 30자 이상 줄임
     private final String date; // 날짜패턴 yyyy-MM-dd HH:mm
     private final int viewCount;
+    private final String account;
+
 
     public BoardListResponseDTO(Board board) {
         this.boardNo = board.getBoardNo();
@@ -26,6 +28,7 @@ public class BoardListResponseDTO {
         this.shortContent = makeShortContent(board.getContent());
         this.date = makePrettierDateString(board.getRegDateTime());
         this.viewCount = board.getViewCount();
+        this.account = board.getAccount();
     }
 
     static String makePrettierDateString(LocalDateTime regDateTime) {

@@ -1,4 +1,4 @@
-package com.spring.mvc.chap05.dto;
+package com.spring.mvc.chap05.dto.request;
 
 import lombok.*;
 
@@ -6,12 +6,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Setter @Getter @ToString
-@EqualsAndHashCode
+@Setter @Getter
+@ToString @EqualsAndHashCode
 @NoArgsConstructor
 public class SignUpRequestDTO {
 
     @NotBlank
+    @Size(min = 4, max = 14)
     private String account;
     @NotBlank
     private String password;

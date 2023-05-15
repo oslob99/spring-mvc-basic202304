@@ -36,8 +36,8 @@ public class PersonRepository {
 
             // SQL을 실행해주는 객체 얻기
             String sql = "INSERT INTO person " +
-                    "(person_name, person_age) " +
-                    "VALUES (?, ?)";
+                            "(person_name, person_age) " +
+                        "VALUES (?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             // ?값 세팅하기
@@ -75,32 +75,28 @@ public class PersonRepository {
 
     }
 
-
-    // 사람정보 삭제 기능
-    public void delete(Person person) {
-
+    // 정보 수정
+    public void update(Person person) {
         Connection conn = null;
         try {
-            // DB 연결
-            // Connection: db연결 정보를 가지며,
-            // SQL을 작성할 수 있는 statement객체를 받을 수 있음
+
             conn = DriverManager.getConnection(url, username, password);
-            // 트랜잭션 시작
+
             conn.setAutoCommit(false); // 오토커밋 비활성화
 
-            // SQL을 실행해주는 객체 얻기
-            String sql = "DELETE FROM person WHERE id=?";
+            String sql = "UPDATE person " +
+                        "SET person_name=?, person_age=? " +
+                        "WHERE id=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setLong(1,person.getId());
-            // sql 실행하기
-            // INSERT, UPDATE, DELETE : executeUpdate()
-            // SELECT : executeQuery()
+            pstmt.setString(1, person.getPersonName());
+            pstmt.setInt(2, person.getPersonAge());
+            pstmt.setLong(3, person.getId());
 
-            // executeUpdate()는 성공한 쿼리의 수를 알려줌
-            ResultSet set = pstmt.executeQuery();
+            int result = pstmt.executeUpdate();
 
-
+            if (result == 1) conn.commit();
+            else conn.rollback();
 
         } catch (SQLException e) {
             try {
@@ -120,39 +116,114 @@ public class PersonRepository {
                 }
             }
         }
+    }
 
+    // 정보 삭제
+    public void remove(long id) {
+        Connection conn = null;
+        try {
+
+            conn = DriverManager.getConnection(url, username, password);
+
+            conn.setAutoCommit(false); // 오토커밋 비활성화
+
+            String sql = "DELETE FROM person " +
+                            "WHERE id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setLong(1, id);
+
+            int result = pstmt.executeUpdate();
+
+            if (result == 1) conn.commit();
+            else conn.rollback();
+
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                e.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     // 사람 정보 전체 조회
-    public List<Person> findAll(){
+    public List<Person> findAll() {
         List<Person> people = new ArrayList<>();
-        // try - with - resource : close 자동화(AutoClosable)
-        try (Connection conn = DriverManager.getConnection(url,username,password)){
+        // try - with - resource  :  close 자동화 (AutoClosable)
+        try (Connection conn
+                     = DriverManager.getConnection(url, username, password)) {
+
             conn.setAutoCommit(false);
 
-            String sql = "SELECT * from person";
+            String sql = "SELECT * FROM person";
             PreparedStatement pstmt = conn.prepareStatement(sql);
+
             ResultSet rs = pstmt.executeQuery();
 
+            // 포인터 커서로 첫번째 행부터 next호출시마다 매 다음 행을 지목
             while (rs.next()) {
-                // 포인터 커서로 첫 번째 행부터 next호출 시 마다 매 다음 행을 지목
-
                 // 위치한 커서에서 데이터 추출
                 long id = rs.getLong("id");
                 String name = rs.getString("person_name");
                 int age = rs.getInt("person_age");
 
-                people.add(new Person(id,name,age));
-
+                Person p = new Person();
+                p.setId(id);
+                p.setPersonName(name);
+                p.setPersonAge(age);
+                people.add(p);
             }
 
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-
         return people;
+    }
+
+    // 사람 정보 개별 조회
+    public Person findOne(long id) {
+
+        // try - with - resource  :  close 자동화 (AutoClosable)
+        try (Connection conn
+                     = DriverManager.getConnection(url, username, password)) {
+
+            conn.setAutoCommit(false);
+
+            String sql = "SELECT * FROM person WHERE id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setLong(1, id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            // 포인터 커서로 첫번째 행부터 next호출시마다 매 다음 행을 지목
+            if (rs.next()) {
+                // 위치한 커서에서 데이터 추출
+                long pid = rs.getLong("id");
+                String name = rs.getString("person_name");
+                int age = rs.getInt("person_age");
+
+                Person p = new Person(pid, name, age);
+                return p;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

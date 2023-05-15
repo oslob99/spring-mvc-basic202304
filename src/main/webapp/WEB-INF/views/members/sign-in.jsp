@@ -23,7 +23,7 @@
             <div class="offset-md-2 col-md-4">
                 <div class="card" style="width:200%;">
                     <div class="card-header text-white" style="background: #343A40;">
-                        <h2><span style="color: gray;">MVC</span> 로그인</h2>               
+                        <h2><span style="color: gray;">MVC</span> 로그인</h2>					
                     </div>
                     <div class="card-body">
                         
@@ -89,7 +89,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td   style="width: 100%; text-align: center; colspan: 2; margin-top: 24px; padding-top: 12px; border-top: 1px solid #ececec">
+                                <td	style="width: 100%; text-align: center; colspan: 2; margin-top: 24px; padding-top: 12px; border-top: 1px solid #ececec">
     
                                     <a id="custom-login-btn" href="https://kauth.kakao.com/oauth/authorize?client_id=${kakaoAppKey}&redirect_uri=http://gondue.co.kr${kakaoRedirect}&response_type=code">
                                         <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
@@ -104,14 +104,15 @@
         </div>
     </div>
 
+
     <script>
         const serverMessage = '${msg}';
-        console.log('msg:' + serverMessage);
+        // console.log('msg: ' + serverMessage);
 
-        if(serverMessage === 'NO_ACC'){
-            alert('회원가입은 했냐?');
-        }else if(serverMessage === 'NO_PW'){
-            alert('비번 틀림요');
+        if (serverMessage === 'NO_ACC') {
+            alert('회원가입부터 하세요~~ 제발~~');
+        } else if (serverMessage === 'NO_PW') {
+            alert('비밀번호가 틀렸어~~');
         }
 
     </script>

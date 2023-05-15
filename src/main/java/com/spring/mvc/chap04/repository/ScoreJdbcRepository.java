@@ -1,10 +1,12 @@
 package com.spring.mvc.chap04.repository;
 
-import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,11 +61,11 @@ public class ScoreJdbcRepository implements ScoreRepository {
             conn.setAutoCommit(false);
 
             String sql = "INSERT INTO tbl_score " +
-                    " (name, kor, eng, math, total, average, grade) " +
+                    " (stu_name, kor, eng, math, total, average, grade) " +
                     " VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, score.getName());
+            pstmt.setString(1, score.getStuName());
             pstmt.setInt(2, score.getKor());
             pstmt.setInt(3, score.getEng());
             pstmt.setInt(4, score.getMath());
@@ -89,10 +91,15 @@ public class ScoreJdbcRepository implements ScoreRepository {
     @Override
     public boolean deleteByStuNum(int stuNum) {
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-        String sql = "DELETE FROM tbl_score where stu_num=?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1,stuNum);
-            int result = pstmt.executeUpdate();
+
+            conn.setAutoCommit(false);
+
+            String sql = "DELETE FROM tbl_score WHERE stu_num=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, stuNum);
+
+            int result = pstmt.executeUpdate(); // 성공시 1, 실패시 0
 
             if (result == 1) {
                 conn.commit();
@@ -109,6 +116,7 @@ public class ScoreJdbcRepository implements ScoreRepository {
 
     @Override
     public Score findByStuNum(int stuNum) {
+
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
 
             String sql = "SELECT * FROM tbl_score WHERE stu_num=?";
@@ -129,11 +137,4 @@ public class ScoreJdbcRepository implements ScoreRepository {
 
         return null;
     }
-
-    @Override
-    public boolean modifyScore(ScoreRequestDTO dto) {
-        return false;
-    }
-
 }
-

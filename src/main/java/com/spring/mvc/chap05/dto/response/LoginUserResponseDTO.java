@@ -2,9 +2,9 @@ package com.spring.mvc.chap05.dto.response;
 
 import lombok.*;
 
-@Setter @Getter @ToString
+@Setter @Getter
+@ToString @EqualsAndHashCode
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
 @Builder
 public class LoginUserResponseDTO {

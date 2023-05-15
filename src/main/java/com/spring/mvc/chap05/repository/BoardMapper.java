@@ -14,6 +14,7 @@ public interface BoardMapper {
 //    List<Board> findAll();
     List<Board> findAll(Search page);
 
+
     // 게시물 상세 조회
     Board findOne(int boardNo);
 
@@ -26,9 +27,6 @@ public interface BoardMapper {
     // 조회수 상승
     void upViewCount(int boardNo);
 
-    // 게시물 수정
-    boolean modifyByNo(Board dto);
-
-    // 총 게시물의 개수
+    // 총 게시물 수 조회하기
     int count(Search search);
 }

@@ -2,13 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.spring.mvc.chap05.repository.BoardMapper">
 
     <select id="findAll" resultType="board">
         SELECT
-        board_no, title,
-        content, view_count, reg_date_time
+            board_no, title,
+            content, view_count, reg_date_time, account
         FROM tbl_board
         <if test="type == 'title'">
             WHERE title LIKE CONCAT('%', #{keyword}, '%')
@@ -18,7 +17,7 @@
         </if>
         <if test="type == 'tc'">
             WHERE title LIKE CONCAT('%', #{keyword}, '%')
-            OR content LIKE CONCAT('%', #{keyword}, '%')
+                OR content LIKE CONCAT('%', #{keyword}, '%')
         </if>
         ORDER BY board_no DESC
         LIMIT #{pageStart}, #{amount}
@@ -26,8 +25,10 @@
 
     <select id="findOne" resultType="board">
         SELECT
-        B.board_no, B.title, B.content, B.view_count
-        , B.reg_date_time, B.account, M.name AS writer
+            B.board_no, B.title,
+            B.content, B.view_count,
+            B.reg_date_time,
+            B.account, M.name AS writer
         FROM tbl_board B
         JOIN tbl_member M
         ON B.account = M.account
@@ -36,7 +37,7 @@
 
     <insert id="save">
         INSERT INTO tbl_board
-        (title, content, account)
+            (title, content, account)
         VALUES (#{title}, #{content}, #{account})
     </insert>
 
@@ -46,15 +47,9 @@
     </delete>
 
     <update id="upViewCount">
-        UPDATE tbl_board
-        SET view_count = view_count + 1
-        WHERE board_no = #{boardNo}
-    </update>
-
-    <update id="modifyByNo">
-        UPDATE tbl_board
-        SET title=#{title}, content=#{content}
-        WHERE board_no = #{boardNo}
+        update tbl_board
+        set view_count = view_count + 1
+        where board_no = #{boardNo};
     </update>
 
     <select id="count" resultType="int">

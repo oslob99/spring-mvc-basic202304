@@ -8,11 +8,11 @@
 </head>
 <body>
 
-    <h1>food.jsp입니다</h1>
+    <h1>food.jsp입니다.</h1>
     
-    <form action="/spring/food-select" method="get">
-        # 음식명 : <input type="text" name="foodName"> <br>
-        # 음식 카테고리 :
+    <form action="/spring/food-select" method="post">
+        # 음식명: <input type="text" name="foodName"> <br>
+        # 음식 카테고리:
         <select name="category">
             <option value="KOREAN">한식</option>
             <option value="WESTERN">양식</option>

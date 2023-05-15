@@ -1,23 +1,31 @@
 * {
     box-sizing: border-box;
 }
+
+body {
+    background-color: #f0f0f0;
+    font-family: 'Single Day', cursive;
+}
+
+button {
+    outline: none;
+    border: none;
+}
+
+#wrap {
+    width: 60%;
+    margin: 100px auto;
+}
+
+
 /* reset */
 a {
     color: inherit;
     text-decoration: none;
 }
 
-button,
-input {
-    outline: none;
-    border: none;
-}
 
 /* common style */
-#wrap {
-    font-size: 15px;
-    font-family: 'Noto Sans KR', sans-serif;
-}
 .hide {
     display: none !important;
 }
@@ -25,7 +33,7 @@ input {
 /* header style */
 header {
     /* background: red; */
-    background-color: #222;
+    background: #222;
     position: fixed;
     width: 100%;
     top: 0;
@@ -42,7 +50,7 @@ header .inner-header {
     /* background: orange; */
     width: 92%;
     margin: 0 auto;
-    height: 60px;
+    height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: center;    

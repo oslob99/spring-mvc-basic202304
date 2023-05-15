@@ -3,17 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
     <settings>
         <!--   자동 카멜케이스 스네이크 케이스 변환 설정     -->
-        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
 
     <typeAliases>
         <!--  entity 클래스 별칭 설정      -->
         <typeAlias alias="score" type="com.spring.mvc.chap04.entity.Score" />
         <typeAlias alias="board" type="com.spring.mvc.chap05.entity.Board" />
-        <typeAlias alias="modi" type="com.spring.mvc.chap05.dto.BoardModifyDTD" />
         <typeAlias alias="reply" type="com.spring.mvc.chap05.entity.Reply" />
         <typeAlias alias="member" type="com.spring.mvc.chap05.entity.Member" />
     </typeAliases>
@@ -26,5 +24,6 @@
         <mapper resource="mappers/ReplyMapper.xml" />
         <mapper resource="mappers/MemberMapper.xml" />
     </mappers>
+
 
 </configuration>

@@ -11,12 +11,11 @@ import lombok.*;
 @AllArgsConstructor
 public class OrderRequestDTO {
 
-    // 필드명이 클라이언트가 보낸 쿼리스트링 이름과 같아야함
-//    세터와 기본생성자가 잇어야 정상 작동
-   private String oNum;
-   private String goods;
-   private int amount;
-   private int price;
-
+    // 필드명이 클라이언트가 보낸 쿼리스트링 이름과 같아야 함
+    // 세터와 기본생성자가 있어야 정상 작동함.
+    private String oNum; // 주문번호
+    private String goods; // 상품명
+    private int amount; // 주문수량
+    private int price; // 상품가격
 
 }

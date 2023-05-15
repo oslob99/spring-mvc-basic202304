@@ -10,10 +10,10 @@
 
     <h1>[${n}]님 취미 목록</h1>
     <ol>
+        <%-- for (변수 : 배열이나 리스트)  --%>
         <c:forEach var="h" items="${hList}">
-            <li>${h}</li>
+            <li>${h}ㅋ</li>
         </c:forEach>
-        
     </ol>
 
 </body>

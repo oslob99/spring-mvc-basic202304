@@ -2,23 +2,16 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace에는 인터페이스 풀 네임(패키지+인터페이스 이름)-->
 <mapper namespace="com.spring.mvc.chap04.repository.ScoreMapper">
 
-    <!--    SQL 작성 : 추상메서드 별로 작성-->
-    <!--    id에는 추상메서드 이름을 적기-->
-
-    <insert id="save">
-        INSERT INTO tbl_score (name, kor, eng, math, total, average, grade)
-        VALUES (#{name}, #{kor}, #{eng}, #{math}, #{total}, #{average}, #{grade})
-    </insert>
-
-<!--    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">-->
-<!--        <result property="stuNum" column="stu_num"/>-->
+<!--    <resultMap id="sc" type="com.spring.mvc.chap04.entity.Score">-->
+<!--        <result column="stu_name" property="stuName" />-->
+<!--        <result column="stu_num" property="stuNum" />-->
 <!--    </resultMap>-->
 
     <select id="findAll" resultType="score">
-        SELECT *
+        SELECT
+            *
         FROM tbl_score
         <if test="sort == 'num'">
             ORDER BY stu_num
@@ -31,19 +24,23 @@
         </if>
     </select>
 
-    <select id="findByStuNum" resultType="score">
-        SELECT * FROM tbl_score
-        WHERE stu_num=#{stuNum}
-    </select>
+    <insert id="save">
+        INSERT INTO tbl_score
+         (stu_name, kor, eng, math, total, average, grade)
+        VALUES (#{stuName}, #{kor},
+                #{eng}, #{math}, #{total},
+                #{average}, #{grade})
+    </insert>
 
     <delete id="deleteByStuNum">
         DELETE FROM tbl_score
         WHERE stu_num=#{stuNum}
     </delete>
 
-    <update id="modifyScore">
-        UPDATE tbl_score set kor=#{kor}, eng=#{eng}, math=#{math}, total=#{total}, average=#{average}, grade=#{grade}
+    <select id="findByStuNum" resultType="score">
+        SELECT *
+        FROM tbl_score
         WHERE stu_num=#{stuNum}
-    </update>
+    </select>
 
 </mapper>

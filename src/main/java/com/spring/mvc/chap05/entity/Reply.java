@@ -12,17 +12,20 @@ create table tbl_reply (
 	reply_date DATETIME default current_timestamp,
 	board_no INT(10),
 	constraint pk_reply primary key (reply_no),
-	constraint fk_reply foreign key (board_no)
+	constraint fk_reply
+	foreign key (board_no)
 	references tbl_board (board_no)
 	on delete cascade
 );
  */
-@Setter @Getter @ToString
+
+@Setter @Getter
+@ToString @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
 public class Reply {
+
     private long replyNo;
     private String replyText;
     private String replyWriter;

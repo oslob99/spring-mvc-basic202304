@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class PersonMapperTest {
 
@@ -16,14 +17,13 @@ class PersonMapperTest {
     PersonMapper mapper;
 
     @Test
-    @DisplayName("마이바티스 매퍼로 사람정보 저장에 성공해야한다")
-    void saveTest(){
-        // given
+    @DisplayName("마이바티스 매퍼로 사람정보 저장에 성공해야 한다.")
+    void saveTest() {
+        //given
         Person p = Person.builder()
-                .personName("김가마")
+                .personName("김마바")
                 .personAge(44)
                 .build();
-
         // when
         boolean flag = mapper.save(p);
 
@@ -32,15 +32,14 @@ class PersonMapperTest {
     }
 
     @Test
-    @DisplayName("마이바티스 매퍼로 사람정보 수정에 성공해야한다")
-    void changeTest(){
-        // given
+    @DisplayName("마이바티스 매퍼로 사람정보 수정에 성공해야 한다.")
+    void changeTest() {
+        //given
         Person p = Person.builder()
-                .personName("후후")
-                .personAge(22)
-                .id(5L)
+                .personName("마바수정")
+                .personAge(88)
+                .id(3L)
                 .build();
-
         // when
         boolean flag = mapper.change(p);
 
@@ -48,11 +47,10 @@ class PersonMapperTest {
         assertTrue(flag);
     }
 
-
     @Test
-    @DisplayName("마이바티스 매퍼로 사람정보 삭제에 성공해야한다")
-    void removeTest(){
-        // given
+    @DisplayName("마이바티스 매퍼로 사람정보 삭제에 성공해야 한다.")
+    void removeTest() {
+        //given
         long id = 6L;
         // when
         boolean flag = mapper.remove(id);
@@ -61,24 +59,31 @@ class PersonMapperTest {
     }
 
     @Test
-    @DisplayName("마이바티스 매퍼로 사람정보 전체 조회에 성공해야한다")
-    void findAllTest(){
-        // given
+    @DisplayName("마이바티스 매퍼로 사람정보 전체조회에 성공해야 한다.")
+    void findAllTest() {
+        //given
+
         // when
         List<Person> people = mapper.findAll();
         //then
-        people.forEach(System.out::println);
-        assertEquals(5,people.size());
+        for (Person person : people) {
+            System.out.println(person);
+        }
+        assertEquals(5, people.size());
     }
 
     @Test
-    @DisplayName("마이바티스 매퍼로 사람정보 개별 조회에 성공해야한다")
-    void findOneTest(){
-        // given
-        long id = 3L;
+    @DisplayName("마이바티스 매퍼로 사람정보 개별조회에 성공해야 한다.")
+    void findOneTest() {
+        //given
+        long id = 5L;
         // when
         Person p = mapper.findOne(id);
         //then
         System.out.println("p = " + p);
+        assertEquals("춘식이", p.getPersonName());
+        assertEquals(5, p.getPersonAge());
+        assertNotNull(p);
     }
+
 }

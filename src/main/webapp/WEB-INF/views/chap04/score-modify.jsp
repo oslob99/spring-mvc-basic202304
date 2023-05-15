@@ -23,6 +23,10 @@
 
 
     <style>
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
         li {
             list-style: none;
             margin: 0;
@@ -59,13 +63,13 @@
 
     <div class="wrap">
         <section class="score-main">
-            <h1 name="name">${ss.name}님 성적 정보 수정하기~</h1>
+            <h1>${s.name}님 성적 정보 수정하기~</h1>
             <form action="/score/modify" method="post">
-                <input type="hidden" name="stuNum" value="${ss.stuNum}">
+                <input type="hidden" name="stuNum" value="${s.stuNum}">
                 <ul>
-                    <li># 국어: <input type="text" name="kor" value="${ss.kor}"></li>
-                    <li># 영어: <input type="text" name="eng" value="${ss.eng}"></li>
-                    <li># 수학: <input type="text" name="math" value="${ss.math}"></li>
+                    <li># 국어: <input type="text" name="kor" value="${s.kor}"></li>
+                    <li># 영어: <input type="text" name="eng" value="${s.eng}"></li>
+                    <li># 수학: <input type="text" name="math" value="${s.math}"></li>
                 </ul>
                 <div class="btn-group">
                     <button type="submit">수정완료</button>
@@ -75,14 +79,6 @@
         </section>
 
     </div>
-
-    <script>
-        
-
-
-    </script>
-
-
 </body>
 
 </html>

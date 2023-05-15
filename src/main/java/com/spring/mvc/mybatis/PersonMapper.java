@@ -9,6 +9,7 @@ import java.util.List;
 public interface PersonMapper {
 
     // CRUD에 대한 기능 명세
+
     // 사람 정보 저장
     boolean save(Person p);
 
@@ -23,6 +24,4 @@ public interface PersonMapper {
 
     // 개별 조회
     Person findOne(long id);
-
-
 }
