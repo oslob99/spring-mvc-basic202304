@@ -51,7 +51,7 @@ public class FileUtil {
         // fullPath = d:/spring-prj/upload/2023/05/16/saf.jpg
         // rootPath = d:/spring-prj/upload/
 
-        return pullPath.substring(rootPath.length() - 1);
+        return pullPath.substring(rootPath.length());
     }
 
     /**
