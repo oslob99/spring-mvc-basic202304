@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.dto.response;
 
+import com.spring.mvc.chap05.entity.LoginMethod;
 import lombok.*;
 
 @Setter @Getter
@@ -14,4 +15,5 @@ public class LoginUserResponseDTO {
     private String email;
     private String auth;
     private String profile;
+    private LoginMethod loginMethod;
 }

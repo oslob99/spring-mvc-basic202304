@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.service;
 
 import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.dto.sns.KaKaoUserDTO;
+import com.spring.mvc.chap05.entity.LoginMethod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -13,6 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Service
@@ -23,7 +25,7 @@ public class SnsLoginService {
      private final MemberService memberService;
 
     // 카카오 로그인 처리
-    public void kakaoService(Map<String, String> requestMap){
+    public void kakaoService(Map<String, String> requestMap, HttpSession session){
         // 인가 코드를 통해 토큰 발급받기
         String accessToken = getKakaoAccessToken(requestMap);
         log.info("token : {}",accessToken);
@@ -31,17 +33,28 @@ public class SnsLoginService {
         // 토큰을 통해 사용자 정보 가져오기
         KaKaoUserDTO dto = getKakaoUserInfo(accessToken);
 
-        // 사용자 정보를 통해 우리 서비스 회원가입 진행
-        memberService.join(
-            SignUpRequestDTO.builder()
-                    .account(dto.getKaKaoAccount().getEmail())
-                    .email(dto.getKaKaoAccount().getEmail())
-                    .name(dto.getKaKaoAccount().getProfile().getNickname())
-                    .password("1234")
-                    .build(),
-            dto.getKaKaoAccount().getProfile().getProfileImageUrl()
-        );
-    }
+        KaKaoUserDTO.KaKaoAccount kaKaoAccount = dto.getKaKaoAccount();
+
+        // 아이디, 이메일 중복확인 검사
+        if(!memberService.checkSignUpValue("account",kaKaoAccount.getEmail())
+            && !memberService.checkSignUpValue("email",kaKaoAccount.getEmail())){
+
+            // 사용자 정보를 통해 우리 서비스 회원가입 진행
+                memberService.join(
+                        SignUpRequestDTO.builder()
+                                .account(kaKaoAccount.getEmail())
+                                .email(kaKaoAccount.getEmail())
+                                .name(kaKaoAccount.getProfile().getNickname())
+                                .password("1234")
+                                .loginMethod(LoginMethod.SNS)
+                                .build(),
+                        kaKaoAccount.getProfile().getProfileImageUrl()
+                );
+            }
+        // 우리 서비스 로그인 처리
+        memberService.maintainLoginState(session, kaKaoAccount.getEmail());
+        }
+
 
     private KaKaoUserDTO getKakaoUserInfo(String accessToken) {
 
